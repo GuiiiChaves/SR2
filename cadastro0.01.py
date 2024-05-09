@@ -15,7 +15,6 @@ def login(email, password):
 
 def entrar_como_visitante():
     print("Você entrou como visitante.")
-    # Aqui você pode adicionar qualquer lógica específica para visitantes, se necessário.
 
 def main():
     while True:
