@@ -1,15 +1,15 @@
 usuarios = {}
 
-def cadastrar_usuario(nome, email, password):
-    if email not in usuarios:
-        usuarios[email] = {"nome": nome, "senha": password}
+def cadastrar_usuario(cpf, nome, numero_telefone, genero, idade, observacoes):
+    if cpf not in usuarios:
+        usuarios[cpf] = {"CPF": cpf, "Nome": nome, "Numero": numero_telefone, "Gênero": genero, "Idade": idade, "Observações": observacoes}
         print("Usuário cadastrado com sucesso!")
     else:
-        print("E-mail já cadastrado!")
+        print("CPF já cadastrado!")
 
-def login(email, password):
-    if email in usuarios and usuarios[email]["senha"] == password:
-        print("Login bem sucedido! Bem-vindo,", usuarios[email]["nome"])
+def login(cpf):
+    if cpf in usuarios and usuarios[cpf] == cpf:
+        print("Login bem sucedido! Bem-vindo,", usuarios["cpf"])
     else:
         print("E-mail ou senha incorretos!")
 
@@ -21,17 +21,22 @@ def main():
         choice = input("Escolha uma opção: ")
 
         if choice == "1":
-            nome = input("Digite seu nome: ")
-            email = input("Digite seu e-mail: ")
-            password = input("Digite a senha: ")
-            cadastrar_usuario(nome, email, password)
+            cpf = float(input("Digite seu CPF: "))
+            nome = input("Digite seu Nome: ")
+            numero_telefone = float(input("Digite seu numero de telefone: "))
+            genero = input("Digite seu gênero: ")
+            idade = int(input("Digite sua idade: "))
+            observacoes = input("Se voce tiver coisas que nao pode comer: ")
+            cadastrar_usuario(nome, cpf, numero_telefone, genero, idade, observacoes)
+
         elif choice == "2":
-            email = input("Digite seu e-mail: ")
-            password = input("Digite a senha: ")
-            login(email, password)
+            cpf = float(input("Digite seu CPF: "))
+            login(cpf)
+
         elif choice == "3":
             print("Saindo...")
             break
+
         else:
             print("Opção inválida!")
 
