@@ -17,7 +17,8 @@ def main():
     while True:
         print("\n1. Cadastrar")
         print("2. Login")
-        print("3. Sair")
+        print("3. Entrar como visitante")
+        print("4. Sair")
         choice = input("Escolha uma opção: ")
 
         if choice == "1":
@@ -32,8 +33,11 @@ def main():
         elif choice == "2":
             cpf = float(input("Digite seu CPF: "))
             login(cpf)
-
+            
         elif choice == "3":
+            entrar_como_visitante()
+
+        elif choice == "4":
             print("Saindo...")
             break
 
