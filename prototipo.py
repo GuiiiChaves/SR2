@@ -16,26 +16,26 @@ class OrderSystem:
                 break
 
     def select_items(self):
-        self.order = {}  
+        self.order = {}  # Limpa o pedido anterior
         self.select_category("hamburgueres")
         self.select_category("bebidas")
         self.select_category("acompanhamentos")
 
     def select_category(self, category):
         print(f"Escolha os itens de {category}:")
-        if category.lower() == "Hambúrgueres":
+        if category.lower() == "hamburgueres":
             menu_items = {
-                "1": "Hambúrguer de carne",
-                "2": "Hambúrguer de frango",
-                "3": "Hambúrguer vegetariano"
+                "1": "Hamburguer de carne",
+                "2": "Hamburguer de frango",
+                "3": "Hamburguer vegetariano"
             }
-        elif category.lower() == "Bebidas":
+        elif category.lower() == "bebidas":
             menu_items = {
                 "1": "Coca-Cola",
                 "2": "Fanta Laranja",
                 "3": "Água mineral"
             }
-        elif category.lower() == "Acompanhamentos":
+        elif category.lower() == "acompanhamentos":
             menu_items = {
                 "1": "Batata frita",
                 "2": "Salada",
