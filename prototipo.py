@@ -8,7 +8,7 @@ class OrderSystem:
     def main(self):
         while True:
             response = input("Você deseja pedir algo? (SIM/NÃO): ")
-            if response.upper() == "SIM" or == "S":
+            if response.upper() == "SIM":
                 self.select_items()
                 self.save_order()
                 break
