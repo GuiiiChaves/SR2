@@ -7,8 +7,8 @@ class OrderSystem:
 
     def main(self):
         while True:
-            response = input("Você deseja pedir algo? (SIM/NAO): ")
-            if response.upper() == "SIM":
+            response = input("Você deseja pedir algo? (SIM/NÃO): ")
+            if response.upper() == "SIM" or == "S":
                 self.select_items()
                 self.save_order()
                 break
@@ -16,26 +16,26 @@ class OrderSystem:
                 break
 
     def select_items(self):
-        self.order = {}  # Limpa o pedido anterior
+        self.order = {}  
         self.select_category("hamburgueres")
         self.select_category("bebidas")
         self.select_category("acompanhamentos")
 
     def select_category(self, category):
         print(f"Escolha os itens de {category}:")
-        if category.lower() == "hamburgueres":
+        if category.lower() == "Hambúrgueres":
             menu_items = {
-                "1": "Hamburguer de carne",
-                "2": "Hamburguer de frango",
-                "3": "Hamburguer vegetariano"
+                "1": "Hambúrguer de carne",
+                "2": "Hambúrguer de frango",
+                "3": "Hambúrguer vegetariano"
             }
-        elif category.lower() == "bebidas":
+        elif category.lower() == "Bebidas":
             menu_items = {
                 "1": "Coca-Cola",
                 "2": "Fanta Laranja",
                 "3": "Água mineral"
             }
-        elif category.lower() == "acompanhamentos":
+        elif category.lower() == "Acompanhamentos":
             menu_items = {
                 "1": "Batata frita",
                 "2": "Salada",
