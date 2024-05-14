@@ -74,7 +74,7 @@ class OrderSystem:
             print(f"- {item_name}: {item_details['quantity']}x")
 
     def leave_comment(self):
-        response = input("Deseja deixar um comentário? (SIM/NAO): ")
+        response = input("Deseja deixar um comentário? (SIM/NÃO): ")
         if response.upper() == "SIM":
             comment = input("Faça um comentário!: ")
             print("OBRIGADO POR COMPRAR CONOSCO!")
