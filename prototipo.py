@@ -2,9 +2,6 @@ class OrderSystem:
     def __init__(self):
         self.order = {}
 
-    def entrar_como_visitante(self):
-        print("Início de atendimento!")
-
     def main(self):
         while True:
             response = input("Você deseja pedir algo? (SIM/NÃO): ")
@@ -16,7 +13,7 @@ class OrderSystem:
                 break
 
     def select_items(self):
-        self.order = {}  # Limpa o pedido anterior
+        self.order = {}  
         self.select_category("hamburgueres")
         self.select_category("bebidas")
         self.select_category("acompanhamentos")
