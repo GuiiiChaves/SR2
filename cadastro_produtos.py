@@ -5,7 +5,7 @@ def nome_sistema():
 
 def menu_produtos():
     print("SELECIONE QUAL PRODUTO VOCE DESEJA CADASTRAR!")
-    print("1 - Hamburgueres")
+    print("1 - Hamburguer")
     print("2 - Bebida")
     print("3 - Acompanhamentos")
     print("4 - Buscar um produto")
