@@ -1,5 +1,6 @@
 import json
 import os
+from time import sleep
 
 class cor:
     VERMELHO = '\033[91m'
@@ -10,100 +11,143 @@ class cor:
     CIANO = '\033[96m'
     RESET = '\033[0m'
 
-arquivo = os.path.join(os.path.dirname(__file__), 'adimin.json')
+arquivo = os.path.join(os.path.dirname(__file__), 'codigo_produto.json')
 
-def cadastrar_produto(codigo_hamburguer, codigo_bebida, codigo_acompanhamento):
-    with open(arquivo, "r") as f:
-        codigo_hamburguer = json.load(f)
-        codigo_acompanhamento = json.load(f)
-        codigo_bebida = json.load(f)
+def cadastrar_produto(codigo_produto, tipo_produto):
+    with open(arquivo, 'r') as f:
+        codigo_produto = json.load(f)
         
-        
-    codigo_hamburguer.append({"codigo": codigo_hamburguer})
-    codigo_bebida.append({"codigo": codigo_bebida})
-    codigo_acompanhamento.append({"codigo": codigo_acompanhamento})
-    
-    with open(arquivo, "w") as f:
+    codigo_produto.append({"codigo": codigo_produto, "tipo":tipo_produto})
+
+    with open(arquivo, 'w') as f:
         json.dump(arquivo, f, indent=4)
     print(" Produto cadastrado com sucesso!")
     
 def listar_produtos():
     with open(arquivo, 'r') as f:
-        codigos_produtos = json.load(f)
+        codigo_produto = json.load(f)
 
-    if codigos_produtos:
+    if codigo_produto:
         print("=" *50)
         print("LISTA DE PRODUTOS:")
         print("-" *50)
-        for usuario in codigos_produtos:
+        for codigos_produtos in codigo_produto:
             print("*" *50)
-            print(f"NOME: {usuario['nome']}, IDADE: {usuario['idade']}")
+            print(f"TIPO: {codigos_produtos['tipo']}, CODIGO: {codigos_produtos['codigo']}")
             print("*" *50)
             print("=" *50)
     else:
-        print("😒 NENHUM USUÁRIO CADASTRADO.")
+        print("NENHUM USUÁRIO CADASTRADO.")
 
-def nome_sistema():
-    print("---------->>>>>CADASTRO DE PRODUTOS<<<<<----------")
+def atualizar_produto(codigo_produto_antigo, novo_codigo_produto, novo_tipo_produto):
+    with open(arquivo, 'r') as f:
+        codigo_produto = json.load(f)
+
+    for codigos_produtos in codigo_produto:
+        if codigos_produtos['codigo'] == codigo_produto_antigo:
+            codigos_produtos['codigo'] = novo_codigo_produto
+            codigos_produtos['tipo'] = novo_tipo_produto
+            break
+
+    with open(arquivo, 'w') as f:
+        json.dump(codigo_produto, f, indent=4)
+    print("PRODUTO ATUALIZADO COM SUCESSO!")
+
+def excluir_produto(codigo_produto):
+    with open(arquivo, 'r') as f:
+        codigo_produto = json.load(f)
+
+    for codigos_produtos in codigo_produto:  
+        if codigos_produtos['codigo'] == codigo_produto:
+            codigo_produto.remove(codigos_produtos)
+
+    with open(arquivo, 'w') as f:
+        json.dump(codigo_produto, f, indent=4)
+        print("PRODUTO EXCLUÍDO COM SUCESSO!")
+
+def buscar_produto(codigo_produto):
+    with open(arquivo, 'r') as f:
+        codigo_produto = json.load(f)
+    
+    encontrado = False
+
+    for codigos_produtos in codigo_produto:
+        if codigos_produtos['nome'] == codigo_produto:
+            print(f"CODIGO: {codigos_produtos['codigo']}, TIPO: {codigos_produtos['tipo']}")
+            encontrado = True
+    if not encontrado:
+            print("NENHUM PRODUTO CADASTRADO.")
+
+def linha_horizontal(cor):
+    return cor + "=" * 50 + cor['RESET']
+
+def menu_inicial():
+    print (cor.AZUL + "=" *55 + cor.RESET)
+    print (cor.VERMELHO + "  ---------->>>>>CADASTRO DE PRODUTOS<<<<<----------")
+    print("          1 -- MENU DE CADASTROS")
+    print("          2 -- SAIR")
+    print (cor.AZUL + "=" *55 + cor.RESET)
 
 def menu_produtos():
     print("\nMENU DE CADASTROS!")
-    print("1 - Hamburguer")
-    print("2 - Bebida")
-    print("3 - Acompanhamento")
-    print("4 - Listar produtos")
-    print("4 - Buscar produto já cadastrado")
-    print("5 - Ediçäo dos produtos cadastrados")
-    print("6 - Excluir produto")
+    print("1. CADASTRAR PRODUTO")
+    print("2. LISTAR PRODUTOS")
+    print("3. BUSCAR PRODUTO JA CADASTRADO")
+    print("4. EDITAR PRODUTO")
+    print("5. EXCLUIR PRODUTO")
+    print("6. SAIR")
 
-def volta_menu():
-    input("Digite uma tecla para voltar ao menu anterior! ")
-    main()
-
-def opcoes():
-    escolhas = int(input("Escolha uma das opcoes: "))
-    match (escolhas):
-        case 1:
-            codigo_hamburguer = str(input("Digite o codigo do produto aq: "))
-            print("Produto cadastrado com sucesso!", codigo_hamburguer)
-            volta_menu()
-
-        case 2:
-            codigo_bebida = str(input("Digite o codigo do produto aq: "))
-            print("Produto cadastrado com sucesso!", codigo_bebida)
-            volta_menu()
-
-        case 3:
-            codigo_acompanhamento = str(input("Digite o codigo do produto aq: "))
-            print("Produto cadastrado com sucesso!", codigo_acompanhamento)
-            volta_menu()
-
-        case 4:
-            codigo_busca = str(input("Digite o codigo do produto aqui: "))
-            print("Produto encontrado!", codigo_busca)
-            volta_menu()
-
-        case 5:
-            codigo = str(input("Digite o codigo do produto que voce deseja editar: "))
-            print("Proguto escolhido", codigo)
-            observacao = str(input("Faca a alteracao: "))
-            print(observacao)
-            print("Alteracao realizada com sucesso!")
-            volta_menu()
-
-        case 6:
-            print(" Sistema Finalizado!")
-
-        case __:
-            print("Opcao invalida! Digite uma opcao existente!")
-            main()
-        
 def main():
-    os.system("cls")
-    nome_sistema()
-    menu_produtos()
-    opcoes()
 
+    while True:
+        menu_inicial()
+        escolha = int(input("Escolha uma das opcoes: "))
+
+        match (escolha):
+
+            case 1:
+                while True:
+                    menu_produtos()
+                    opcao = input("ESCOLHA UMA OPÇÃO:\n>>>")
+
+                    if opcao == "1":
+                        codigo_produto = input("CODIGO DO PRODUTO:\n>>> ")
+                        tipo_produto = input("TIPO DO PRODUTO:\n>>> ")
+                        cadastrar_produto(codigo_produto, tipo_produto)
+                        
+                    elif opcao == "2":
+                        listar_produtos()
+
+                    elif opcao == "3":
+                        codigo_produto_antigo = input("DIGITE O CODIGO A SER MUDADO:\n>>> ")
+                        novo_codigo_produto = input("DIGITE O NOVO CODIGO DO PRODUTO:\n>>> ")
+                        novo_tipo_produto = input("DIGITE SE O TIPO MUDOU:\n>>> ")
+                        atualizar_produto(codigo_produto_antigo, novo_codigo_produto, novo_tipo_produto)
+
+                    elif opcao == "4":
+                        codigo_produto = input("CODIGO DO PRODUTO: ")
+                        buscar_produto(codigo_produto)
+
+                    elif opcao == "5":
+                        codigo_produto = input("DIGITE O CODIGO PARA SER EXCLUIDO:\n>>> ")
+                        excluir_produto(codigo_produto)
+
+                    elif opcao == "6":
+                        print("🚀 SAINDO...")
+                        sleep(3)
+                        break
+
+                    else:
+                        print("😡 OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
+
+            case 2:
+                print("🚀 SAINDO...")
+                sleep(3)
+                break
+
+            case __:
+                print("😡 OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
+    
 if __name__ == "__main__":
     main()
     
