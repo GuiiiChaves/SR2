@@ -15,9 +15,9 @@ arquivo = os.path.join(os.path.dirname(__file__), 'codigo_produto.json')
 
 def cadastrar_produto(codigo_produto, tipo_produto):
     with open(arquivo, 'r') as f:
-        codigo_produto = json.load(f)
+        codigo_produtos = json.load(f)
         
-    codigo_produto.append({"codigo": codigo_produto, "tipo":tipo_produto})
+    codigo_produtos.append({"codigo": codigo_produto, "tipo":tipo_produto})
 
     with open(arquivo, 'w') as f:
         json.dump(arquivo, f, indent=4)
@@ -25,13 +25,13 @@ def cadastrar_produto(codigo_produto, tipo_produto):
     
 def listar_produtos():
     with open(arquivo, 'r') as f:
-        codigo_produto = json.load(f)
+        codigo_produtos = json.load(f)
 
-    if codigo_produto:
+    if codigo_produtos:
         print("=" *50)
         print("LISTA DE PRODUTOS:")
         print("-" *50)
-        for codigos_produtos in codigo_produto:
+        for codigos_produtos in codigo_produtos:
             print("*" *50)
             print(f"TIPO: {codigos_produtos['tipo']}, CODIGO: {codigos_produtos['codigo']}")
             print("*" *50)
@@ -41,25 +41,25 @@ def listar_produtos():
 
 def atualizar_produto(codigo_produto_antigo, novo_codigo_produto, novo_tipo_produto):
     with open(arquivo, 'r') as f:
-        codigo_produto = json.load(f)
+        codigo_produtos = json.load(f)
 
-    for codigos_produtos in codigo_produto:
+    for codigos_produtos in codigo_produtos:
         if codigos_produtos['codigo'] == codigo_produto_antigo:
             codigos_produtos['codigo'] = novo_codigo_produto
             codigos_produtos['tipo'] = novo_tipo_produto
             break
 
     with open(arquivo, 'w') as f:
-        json.dump(codigo_produto, f, indent=4)
+        json.dump(codigo_produtos, f, indent=4)
     print("PRODUTO ATUALIZADO COM SUCESSO!")
 
 def excluir_produto(codigo_produto):
     with open(arquivo, 'r') as f:
         codigo_produto = json.load(f)
 
-    for codigos_produtos in codigo_produto:  
+    for codigos_produtos in codigo_produtos:  
         if codigos_produtos['codigo'] == codigo_produto:
-            codigo_produto.remove(codigos_produtos)
+            codigo_produtos.remove(codigos_produtos)
 
     with open(arquivo, 'w') as f:
         json.dump(codigo_produto, f, indent=4)
@@ -67,11 +67,11 @@ def excluir_produto(codigo_produto):
 
 def buscar_produto(codigo_produto):
     with open(arquivo, 'r') as f:
-        codigo_produto = json.load(f)
+        codigo_produtos = json.load(f)
     
     encontrado = False
 
-    for codigos_produtos in codigo_produto:
+    for codigos_produtos in codigo_produtos:
         if codigos_produtos['nome'] == codigo_produto:
             print(f"CODIGO: {codigos_produtos['codigo']}, TIPO: {codigos_produtos['tipo']}")
             encontrado = True
