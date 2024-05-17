@@ -55,7 +55,7 @@ def atualizar_produto(codigo_produto_antigo, novo_codigo_produto, novo_tipo_prod
 
 def excluir_produto(codigo_produto):
     with open(arquivo, 'r') as f:
-        codigo_produto = json.load(f)
+        codigo_produtos = json.load(f)
 
     for codigos_produtos in codigo_produtos:  
         if codigos_produtos['codigo'] == codigo_produto:
