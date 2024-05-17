@@ -13,6 +13,11 @@ class cor:
 
 arquivo = os.path.join(os.path.dirname(__file__), 'codigo_produto.json')
 
+def verificar_arquivo():
+    if not os.path.exists(arquivo):
+        with open(arquivo, 'w') as f:
+            json.dump([], f)
+
 def cadastrar_produto(codigo_produto, tipo_produto):
     with open(arquivo, 'r') as f:
         codigo_produtos = json.load(f)
@@ -98,6 +103,7 @@ def menu_produtos():
     print("6. SAIR")
 
 def main():
+    verificar_arquivo()
 
     while True:
         menu_inicial()
