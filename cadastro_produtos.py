@@ -90,7 +90,8 @@ def menu_inicial():
     print (cor.AZUL + "=" *55 + cor.RESET)
     print (cor.VERMELHO + "  ---------->>>>>CADASTRO DE PRODUTOS<<<<<----------")
     print("          1 -- MENU DE CADASTROS")
-    print("          2 -- SAIR")
+    print("          2 -- MENU DE PEDIDOS")
+    print("          3 -- SAIR")
     print (cor.AZUL + "=" *55 + cor.RESET)
 
 def menu_produtos():
@@ -107,7 +108,7 @@ def main():
 
     while True:
         menu_inicial()
-        escolha = int(input("Escolha uma das opcoes: "))
+        escolha = int(input("ESCOLHA UMA OPCAO:\n>>> "))
 
         match (escolha):
 
@@ -127,7 +128,7 @@ def main():
                     elif opcao == "3":
                         codigo_produto_antigo = input("DIGITE O CODIGO A SER MUDADO:\n>>> ")
                         novo_codigo_produto = input("DIGITE O NOVO CODIGO DO PRODUTO:\n>>> ")
-                        novo_tipo_produto = input("DIGITE SE O TIPO MUDOU:\n>>> ")
+                        novo_tipo_produto = input("DIGITE O TIPO DO PRODUTO:\n>>> ")
                         atualizar_produto(codigo_produto_antigo, novo_codigo_produto, novo_tipo_produto)
 
                     elif opcao == "4":
@@ -145,8 +146,11 @@ def main():
 
                     else:
                         print("😡 OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
-
+            
             case 2:
+                print("EM MANUTENCAO!")
+
+            case 3:
                 print("🚀 SAINDO...")
                 sleep(3)
                 break
