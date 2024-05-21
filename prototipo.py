@@ -15,7 +15,7 @@ itens_menu = {
         "3": {"nome": "Anéis de cebola", "porção": "100g", "calorias": 300, "valor": 18.00}
     }
 }
-
+numero_pedido = 0
 contador_pedidos = 0
 pedido = {}
 
@@ -30,7 +30,7 @@ def mostrar_menu(categoria):
             print(f"{numero}: {item['nome']} - Porção: {item['porção']} - Calorias: {item['calorias']} kcal - Valor: R${item['valor']:.2f}")
 
 def fazer_pedido():
-    global contador_pedidos, pedido
+    global contador_pedidos, pedido, numero_pedido
     contador_pedidos += 1
     numero_pedido = contador_pedidos
     print(f"Pedido nº {numero_pedido}\n")
@@ -72,18 +72,36 @@ def editar_pedido(numero_pedido):
     while True:
         resposta = input("Deseja alterar algum item do pedido? (S/N): ")
         if resposta.upper() == 'S':
-            item_para_alterar = input("Digite o número do item que deseja alterar: ")
-            try:
-                item_para_alterar = int(item_para_alterar) - 1
-                item_nome = list(pedido.keys())[item_para_alterar]
-                nova_quantidade = int(input("Digite a nova quantidade: "))
-                if nova_quantidade == 0:
-                    del pedido[item_nome]
-                else:
-                    pedido[item_nome]['quantidade'] = nova_quantidade
+            item_para_alterar = input("Digite o número do item que deseja alterar ou 'A' para adicionar mais itens: ")
+            if item_para_alterar.upper() == 'A':
+                for categoria in itens_menu:
+                    mostrar_menu(categoria)
+                    while True:
+                        escolha = input(f"Escolha um item de {categoria} ou digite 's' para sair: ")
+                        if escolha == 's':
+                            break
+                        if escolha in itens_menu[categoria]:
+                            quantidade = int(input("Digite a quantidade: "))
+                            item = itens_menu[categoria][escolha]
+                            if item['nome'] in pedido:
+                                pedido[item['nome']]['quantidade'] += quantidade
+                            else:
+                                pedido[item['nome']] = {'quantidade': quantidade, 'calorias': item['calorias'], 'valor': item['valor']}
+                        else:
+                            print("Escolha inválida, tente novamente.")
                 mostrar_resumo(numero_pedido)
-            except (ValueError, IndexError):
-                print("Item não encontrado no pedido.")
+            else:
+                try:
+                    item_para_alterar = int(item_para_alterar) - 1
+                    item_nome = list(pedido.keys())[item_para_alterar]
+                    nova_quantidade = int(input("Digite a nova quantidade: "))
+                    if nova_quantidade == 0:
+                        del pedido[item_nome]
+                    else:
+                        pedido[item_nome]['quantidade'] = nova_quantidade
+                    mostrar_resumo(numero_pedido)
+                except (ValueError, IndexError):
+                    print("Item não encontrado no pedido.")
         elif resposta.upper() == 'N':
             break
         else:
@@ -96,4 +114,5 @@ def adicionar_comentario():
     else:
         print("Nenhum comentário adicionado.")
         print("Obrigado por fazer seu pedido!")
+
 fazer_pedido()
