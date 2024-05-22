@@ -4,10 +4,6 @@ from time import sleep
 
 usuarios = {}
 
-import json
-import os
-from time import sleep
-
 usuarios = {}
 itens_menu = {
     "hamburgueres": {
@@ -340,3 +336,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
