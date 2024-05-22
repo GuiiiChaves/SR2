@@ -4,24 +4,33 @@ from time import sleep
 
 usuarios = {}
 
-usuarios = {}
 itens_menu = {
     "hamburgueres": {
-        "1": {"nome": "Hambúrguer de carne", "ingredientes": "Pão, carne, alface, tomate, queijo", "calorias": 550, "valor": 25.00},
-        "2": {"nome": "Hambúrguer de frango", "ingredientes": "Pão, frango, alface, tomate, maionese", "calorias": 400, "valor": 22.00},
-        "3": {"nome": "Hambúrguer vegetariano", "ingredientes": "Pão, falafel, alface, tomate, cebola roxa", "calorias": 350, "valor": 33.00}
-    },
-    "bebidas": {
-        "1": {"nome": "Coca-Cola", "volume": "350ml", "calorias": 140, "valor": 9.00},
-        "2": {"nome": "Fanta Laranja", "volume": "350ml", "calorias": 160, "valor": 8.50},
-        "3": {"nome": "Água mineral", "volume": "500ml", "calorias": 0, "valor": 4.50}
+        "1": {"nome": "Clássico", "ingredientes": "Pão Brioche, Hambúrguer Bovino 180g, Queijo Cheddar, Alface, Tomate, Cebola, Molho Mostarda", "kcal": 700, "valor": 34.90},
+        "2": {"nome": "Porco com Queijo", "ingredientes": "Pão Brioche, Carne de Porco 180g, Queijo Gruyère, Bacon, Picles", "kcal": 800, "valor": 39.00},
+        "3": {"nome": "Bacon Mania", "ingredientes": "Pão Australiano, Hambúrguer Angus 180g, Queijo Mussarela, Bacon, Alface, Tomate, Molho Barbecue", "kcal": 750, "valor": 23.90},
+        "4": {"nome": "Explosão de Sabor", "ingredientes": "Pão Australiano, Hambúrguer Angus 180g, Queijo Cheddar, Bacon, Alface, Tomate, Molho Maionese", "kcal": 780, "valor": 30.00},
+        "5": {"nome": "Frango Grelhado", "ingredientes": "Pão Integral, Peito de Frango Grelhado 180g, Queijo Prato, Presunto, Alface, Tomate, Molho Ketchup", "kcal": 600, "valor": 29.90}
     },
     "acompanhamentos": {
-        "1": {"nome": "Batata frita", "porção": "150g", "calorias": 400, "valor": 17.00},
-        "2": {"nome": "Salada", "porção": "200g", "calorias": 100, "valor": 10.00},
-        "3": {"nome": "Anéis de cebola", "porção": "100g", "calorias": 300, "valor": 18.00}
+        "1": {"nome": "Batata Rústica", "porção": "100g", "kcal": 200, "valor": 20.00},
+        "2": {"nome": "Batata Canoa", "porção": "100g", "kcal": 220, "valor": 20.00},
+        "3": {"nome": "Batata Frita", "porção": "100g", "kcal": 300, "valor": 15.00},
+        "4": {"nome": "Batata Bacon", "porção": "100g", "kcal": 350, "valor": 25.00},
+        "5": {"nome": "Onion Rings", "porção": "100g", "kcal": 250, "valor": 20.00}
+    },
+    "bebidas": {
+        "1": {"nome": "Água com gás", "kcal": 0, "valor": 5.00},
+        "2": {"nome": "Água sem gás", "kcal": 0, "valor": 4.00},
+        "3": {"nome": "Suco de Laranja", "kcal": 120, "valor": 8.00},
+        "4": {"nome": "Suco de Acerola", "kcal": 100, "valor": 8.00},
+        "5": {"nome": "Suco de Caja", "kcal": 110, "valor": 8.50},
+        "6": {"nome": "Guaraná Antarctica", "kcal": 150, "valor": 10.00},
+        "7": {"nome": "Coca-Cola", "kcal": 140, "valor": 10.00},
+        "8": {"nome": "Fanta", "kcal": 160, "valor": 10.00}
     }
 }
+
 numero_pedido = 0
 contador_pedidos = 0
 pedido = {}
@@ -133,11 +142,11 @@ def mostrar_menu(categoria):
     print(f"Menu de {categoria}:")
     for numero, item in itens_menu[categoria].items():
         if categoria == "bebidas":
-            print(f"{numero}: {item['nome']} - Volume: {item['volume']} - Calorias: {item['calorias']} kcal - Valor: R${item['valor']:.2f}")
+            print(f"{numero}: {item['nome']} - {item['kcal']} kcal - Valor: R${item['valor']:.2f}")
         elif categoria == "hamburgueres":
-            print(f"{numero}: {item['nome']} - Ingredientes: {item['ingredientes']} - Calorias: {item['calorias']} kcal - Valor: R${item['valor']:.2f}")
+            print(f"{numero}: {item['nome']} - Ingredientes: {item['ingredientes']} - {item['kcal']} kcal - Valor: R${item['valor']:.2f}")
         elif categoria == "acompanhamentos":
-            print(f"{numero}: {item['nome']} - Porção: {item['porção']} - Calorias: {item['calorias']} kcal - Valor: R${item['valor']:.2f}")
+            print(f"{numero}: {item['nome']} - Porção: {item['porção']} - {item['kcal']} kcal - Valor: R${item['valor']:.2f}")
 
 def fazer_pedido():
     global contador_pedidos, pedido, numero_pedido
@@ -150,7 +159,7 @@ def fazer_pedido():
     for categoria in itens_menu:
         mostrar_menu(categoria)
         while True:
-            escolha = input(f"Escolha um item de {categoria} ou digite 's' para prosseguir: ")
+            escolha = input(f"Escolha um item de {categoria} ou digite 's' para sair: ")
             if escolha == 's':
                 break
             if escolha in itens_menu[categoria]:
@@ -159,7 +168,7 @@ def fazer_pedido():
                 if item['nome'] in pedido:
                     pedido[item['nome']]['quantidade'] += quantidade
                 else:
-                    pedido[item['nome']] = {'quantidade': quantidade, 'calorias': item['calorias'], 'valor': item['valor']}
+                    pedido[item['nome']] = {'quantidade': quantidade, 'kcal': item['kcal'], 'valor': item['valor']}
             else:
                 print("Escolha inválida, tente novamente.")
 
@@ -169,13 +178,13 @@ def fazer_pedido():
 
 def mostrar_resumo(numero_pedido):
     print(f"\nResumo do pedido nº {numero_pedido}:")
-    total_calorias = 0
+    total_kcal = 0
     total_valor = 0
     for i, (item, detalhes) in enumerate(pedido.items(), 1):
-        total_calorias += detalhes['calorias'] * detalhes['quantidade']
+        total_kcal += detalhes['kcal'] * detalhes['quantidade']
         total_valor += detalhes['valor'] * detalhes['quantidade']
-        print(f"{i}. {detalhes['quantidade']}x {item} - Calorias: {detalhes['calorias']} kcal - Valor: R${detalhes['valor'] * detalhes['quantidade']:.2f}")
-    print(f"Total de calorias do pedido: {total_calorias} kcal")
+        print(f"{i}. {detalhes['quantidade']}x {item} - {detalhes['kcal']} kcal - Valor: R${detalhes['valor'] * detalhes['quantidade']:.2f}")
+    print(f"Total de kcal do pedido: {total_kcal} kcal")
     print(f"Valor total do pedido: R${total_valor:.2f}")
 
 def editar_pedido(numero_pedido):
@@ -196,7 +205,7 @@ def editar_pedido(numero_pedido):
                             if item['nome'] in pedido:
                                 pedido[item['nome']]['quantidade'] += quantidade
                             else:
-                                pedido[item['nome']] = {'quantidade': quantidade, 'calorias': item['calorias'], 'valor': item['valor']}
+                                pedido[item['nome']] = {'quantidade': quantidade, 'kcal': item['kcal'], 'valor': item['valor']}
                         else:
                             print("Escolha inválida, tente novamente.")
                 mostrar_resumo(numero_pedido)
@@ -336,4 +345,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
