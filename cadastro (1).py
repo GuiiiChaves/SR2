@@ -235,13 +235,13 @@ def adicionar_comentario():
     print("Obrigado por fazer seu pedido!")
 
 def menu_inicial():
-    print(Cor.AZUL + "=" * 55 + Cor.RESET)
+    print(Cor.AZUL + "=" * 65 + Cor.RESET)
     print(Cor.VERMELHO + "  ---------->>>>>CADASTRO DE PRODUTOS E USUÁRIOS<<<<<----------")
     print("          1 -- MENU DE CADASTROS DE USUÁRIOS")
     print("          2 -- MENU DE CADASTROS DE PRODUTOS")
     print("          3 -- FAZER PEDIDO")
     print("          4 -- SAIR")
-    print(Cor.AZUL + "=" * 55 + Cor.RESET)
+    print(Cor.AZUL + "=" * 65 + Cor.RESET)
 
 def menu_usuarios():
     print("\nMENU DE USUÁRIOS!")
