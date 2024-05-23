@@ -19,6 +19,11 @@ class Cor:
     CIANO = '\033[96m'
     RESET = '\033[0m'
 
+def verificar_arquivo_clientes():
+    if not os.path.exists(arquivo2):
+        with open(arquivo2, 'w') as f:
+            json.dump([], f) 
+            
 def cadastrar_usuario(cpf, nome, numero_telefone, observacoes):
     with open(arquivo2, 'r') as f:
         usuarios = json.load(f)
