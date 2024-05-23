@@ -13,7 +13,7 @@ class cor:
 
 arquivo = os.path.join(os.path.dirname(__file__), 'codigo_produto.json')
 
-def verificar_arquivo():
+def verificar_arquivo_produto():
     if not os.path.exists(arquivo):
         with open(arquivo, 'w') as f:
             json.dump([], f)
@@ -101,10 +101,11 @@ def menu_produtos():
     print("3. BUSCAR PRODUTO JA CADASTRADO")
     print("4. EDITAR PRODUTO")
     print("5. EXCLUIR PRODUTO")
-    print("6. SAIR")
+    print("6. VOLTAR AO MENU ANTERIOR")
+    print("7. SAIR")
 
 def main():
-    verificar_arquivo()
+    verificar_arquivo_produto()
 
     while True:
         menu_inicial()
@@ -140,6 +141,11 @@ def main():
                         excluir_produto(codigo_produto)
 
                     elif opcao == "6":
+                        print("VOLTAR AO MENU ANTERIOR...")
+                        sleep(3)
+                        break
+
+                    elif opcao == "7":
                         print("🚀 SAINDO...")
                         sleep(3)
                         break
