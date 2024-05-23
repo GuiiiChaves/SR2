@@ -69,7 +69,7 @@ class Cor:
 
 arquivo = os.path.join(os.path.dirname(__file__), 'codigo_produto.json')
 
-def verificar_arquivo():
+def verificar_arquivo_produto():
     if not os.path.exists(arquivo):
         with open(arquivo, 'w') as f:
             json.dump([], f)
@@ -248,7 +248,8 @@ def menu_usuarios():
     print("1. CADASTRAR USUÁRIO")
     print("2. LOGIN")
     print("3. ENTRAR COMO VISITANTE")
-    print("4. SAIR")
+    print("4. VOLTAR AO MENU ANTERIOR")
+    print("5. SAIR")
 
 def menu_produtos():
     print("\nMENU DE PRODUTOS!")
@@ -257,7 +258,8 @@ def menu_produtos():
     print("3. BUSCAR PRODUTO")
     print("4. EDITAR PRODUTO")
     print("5. EXCLUIR PRODUTO")
-    print("6. SAIR")
+    print("6. VOLTAR AO MENU ANTERIOR")
+    print("7. SAIR")
 
 def main():
     verificar_arquivo()
@@ -291,6 +293,11 @@ def main():
                     break
 
                 elif opcao == "4":
+                    print("VOLTAR AO MENU ANTERIOR...")
+                    sleep(3)
+                    break
+
+                elif opcao == "5":
                     print("Saindo...")
                     break
 
@@ -325,6 +332,11 @@ def main():
                     excluir_produto(codigo_produto)
 
                 elif opcao == "6":
+                    print("VOLTAR AO MENU ANTERIOR...")
+                    sleep(3)
+                    break
+
+                elif opcao == "7":
                     print("🚀 SAINDO...")
                     sleep(3)
                     break
