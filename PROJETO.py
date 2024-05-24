@@ -24,11 +24,11 @@ def verificar_arquivo_clientes():
         with open(arquivo2, 'w') as f:
             json.dump([], f) 
             
-def cadastrar_usuario(cpf, nome, numero_telefone, observacoes):
+def cadastrar_usuario(cpf, nome, numero_telefone, observacoes, idade):
     with open(arquivo2, 'r') as f:
         usuarios = json.load(f)
 
-    usuarios.append({'CPF': cpf, 'nome': nome, 'número': numero_telefone, 'observacoes': observacoes})
+    usuarios.append({'CPF': cpf, 'nome': nome, 'número': numero_telefone, 'observacoes': observacoes, 'idade': idade})
 
     with open(arquivo2, 'w') as f:
         json.dump(usuarios, f, indent=4)
@@ -39,7 +39,8 @@ def login(cpf):
         usuarios = json.load(f)
     for usuario in usuarios:
         if usuario['CPF'] == cpf:
-            usuarios.read(usuario)
+            return True
+        return False
 
     with open(arquivo2, 'w') as f:
         json.dump(usuarios, f, indent=4)
@@ -50,7 +51,7 @@ def entrar_como_visitante():
     visitante = input(print("ESCREVA SEU NOME: "))
     print("Início de atendimento!\n OLÁ ", visitante)
 
-def editar_usuario(cpf, nome_novo, numero_novo, observacoes_novas):
+def editar_usuario(cpf, nome_novo, numero_novo, observacoes_novas, nova_idade):
     with open(arquivo2, 'r') as f:
         usuarios = json.load(f)
 
@@ -59,6 +60,7 @@ def editar_usuario(cpf, nome_novo, numero_novo, observacoes_novas):
             usuario['nome'] = nome_novo
             usuario['número'] = numero_novo
             usuario['observacoes'] = observacoes_novas
+            usuario['idade'] = nova_idade
 
     with open(arquivo2, 'w') as f:
         json.dump(usuarios, f, indent=4)
@@ -84,11 +86,11 @@ def buscar_usuario (cpf):
 
     for usuario in usuarios:
         if usuario['CPF'] == cpf:
-            print(f"CPF: {usuario['cpf']}, NOME: {usuario['nome']}, NUMERO: {usuario['numero']}, OBSERVACOES: {usuario['observacoes']}")
+            print(f"CPF: {usuario['cpf']}, NOME: {usuario['nome']}, NUMERO: {usuario['numero']}, OBSERVACOES: {usuario['observacoes']}, IDADE: {usuario['idade']}")
             encontrado = True
 
     if not encontrado:
-            print("NENHUM USUÁRIO CADASTRADO.")      
+            print("NENHUM USUÁRIO ENCONTRADO.")      
 
 def listar_usuarios():
     with open(arquivo2, 'r') as f:
@@ -100,7 +102,7 @@ def listar_usuarios():
         print("-" *60)
         for usuario in usuarios:
             print("*" *60)
-            print(f"CPF: {usuario['cpf']}, NOME: {usuario['nome']}, NUMERO: {usuario['numero']}, OBSERVACOES: {usuario['observacoes']}")
+            print(f"CPF: {usuario['cpf']}, NOME: {usuario['nome']}, NUMERO: {usuario['numero']}, OBSERVACOES: {usuario['observacoes']}, IDADE: {usuario['idade']}")
             print("*" *60)
             print("=" *60)      
 
@@ -170,19 +172,25 @@ def buscar_produto(codigo_produto):
             print(f"CODIGO: {produto['codigo']}, TIPO: {produto['tipo']}")
             encontrado = True
             break
+        
     if not encontrado:
         print("NENHUM PRODUTO CADASTRADO COM ESSE CÓDIGO.")
 
 def mostrar_menu(categoria):
+    with open(arquivo3, 'r') as f:
+        pedidos_ = json.load(f)
+        
     print(f"Menu de {categoria}:")
-    for numero, item in itens_menu[categoria].items():
+    for numero, item in pedidos_[categoria].items():
         if categoria == "bebidas":
             print(f"{numero}: {item['nome']} - {item['kcal']} kcal - Valor: R${item['valor']:.2f}")
         elif categoria == "hamburgueres":
             print(f"{numero}: {item['nome']} - Ingredientes: {item['ingredientes']} - {item['kcal']} kcal - Valor: R${item['valor']:.2f}")
         elif categoria == "acompanhamentos":
             print(f"{numero}: {item['nome']} - Porção: {item['porção']} - {item['kcal']} kcal - Valor: R${item['valor']:.2f}")
-
+    with open(arquivo3, 'w') as f:
+        json.dump(arquivo3, f, indent=4)
+        
 def fazer_pedido():
     global contador_pedidos, pedido, numero_pedido
     contador_pedidos += 1
@@ -191,15 +199,15 @@ def fazer_pedido():
     
     pedido = {}
     
-    for categoria in itens_menu:
+    for categoria in arquivo3:
         mostrar_menu(categoria)
         while True:
             escolha = input(f"Escolha um item de {categoria} ou digite 's' para sair: ")
             if escolha == 's':
                 break
-            if escolha in itens_menu[categoria]:
+            if escolha in arquivo3[categoria]:
                 quantidade = int(input("Digite a quantidade: "))
-                item = itens_menu[categoria][escolha]
+                item = arquivo3[categoria][escolha]
                 if item['nome'] in pedido:
                     pedido[item['nome']]['quantidade'] += quantidade
                 else:
@@ -228,15 +236,15 @@ def editar_pedido(numero_pedido):
         if resposta.upper() == 'S':
             item_para_alterar = input("Digite o número do item que deseja alterar ou 'A' para adicionar mais itens: ")
             if item_para_alterar.upper() == 'A':
-                for categoria in itens_menu:
+                for categoria in arquivo3:
                     mostrar_menu(categoria)
                     while True:
                         escolha = input(f"Escolha um item de {categoria} ou digite 's' para sair: ")
                         if escolha == 's':
                             break
-                        if escolha in itens_menu[categoria]:
+                        if escolha in arquivo3[categoria]:
                             quantidade = int(input("Digite a quantidade: "))
-                            item = itens_menu[categoria][escolha]
+                            item = arquivo3[categoria][escolha]
                             if item['nome'] in pedido:
                                 pedido[item['nome']]['quantidade'] += quantidade
                             else:
@@ -333,10 +341,11 @@ def menu_bebida():
 
 def main():
     verificar_arquivo_produto()
-
+    verificar_arquivo_clientes()
+    
     while True:
         menu_inicial()
-        escolha = input("ESCOLHA UMA OPÇÃO:\n>>> ")
+        escolha = int(input("ESCOLHA UMA OPÇÃO:\n>>> "))
 
         match(escolha):
             case 1:
@@ -348,14 +357,17 @@ def main():
                         cpf = input("Digite seu CPF: ")
                         nome = input("Digite seu Nome: ")
                         numero_telefone = input("Digite seu número de telefone: ")
-                        genero = input("Digite seu gênero: ")
                         idade = int(input("Digite sua idade: "))
                         observacoes = input("Se você tiver coisas que não pode comer: ")
-                        cadastrar_usuario(cpf, nome, numero_telefone, genero, idade, observacoes)
+                        cadastrar_usuario(cpf, nome, numero_telefone, idade, observacoes)
 
                     elif opcao == "2":
                         cpf = input("Digite seu CPF: ")
-                        login(cpf)
+                        usuario = login(cpf)
+                        if(usuario):
+                            print("Usuario encontrado!")
+                        else:
+                            print("Usuario nao encontrado")
                         break
 
                     elif opcao == "3":
@@ -364,11 +376,25 @@ def main():
                         break
 
                     elif opcao == "4":
+                        nome_novo = input("DIGITE O NOVO NOME:\n>>> ")
+                        numero_novo = input("DIGITE O NOVO NUMERO:\n>>> ")
+                        nova_idade = int(input("DIGITE A NOVA IDADE:\n>>> "))
+                        observacoes_novas = input("DIGITE A NOVA OBSERVACAO:\n>>> ")
+                        atualizar_produto(nome_novo, numero_novo, nova_idade, observacoes_novas)
+                    
+                    elif opcao == "5":
+                        cpf = float(input("DIGITE O CPF QUE DESEJA EXCLUIR:\n>>> "))
+                        excluir_usuario(cpf)
+                        
+                    elif opcao == "6":
+                        listar_usuarios()
+                        
+                    elif opcao == "7":
                         print("VOLTAR AO MENU ANTERIOR...")
                         sleep(3)
                         break
-
-                    elif opcao == "5":
+                    
+                    elif opcao == "8":
                         print("Saindo...")
                         break
 
@@ -413,22 +439,27 @@ def main():
                         break
 
                     else:
-                        print("😡 OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
+                        print("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
 
             case 3:
                 while True:
                     menu_pedidos()
-                    opcao = input("ESCOLHA UMA OPÇÃO:\n>>> ")
+                    opcao = fazer_pedido()
 
                     if opcao == "1":
                         menu_hamburguer()
-
+                        opcoes = fazer_pedido()
+                        
+                        if opcoes == "1":
+                            print("ola ")
                     elif opcao == "2":
                         menu_bebida()
-
+                        
+                        
                     elif opcao == "3":
                         menu_acompanhamento()
-
+                        
+                        
                     elif opcao == "4":
                         print("VOLTAR AO MENU ANTERIOR...")
                         sleep(3)
@@ -440,7 +471,7 @@ def main():
                         break
 
                     else:
-                        print("😡 OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
+                        print("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
 
             case 4:
                 print("🚀 SAINDO...")
@@ -448,7 +479,7 @@ def main():
                 break
 
             case __:
-                print("😡 OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
+                print("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
 
 if __name__ == "__main__":
     main()
