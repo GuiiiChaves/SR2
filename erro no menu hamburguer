@@ -24,11 +24,11 @@ def verificar_arquivo_clientes():
         with open(arquivo2, 'w') as f:
             json.dump([], f) 
             
-def cadastrar_usuario(cpf, nome, numero_telefone, observacoes, idade):
+def cadastrar_usuario(cpf, nome, numero, observacoes, idade):
     with open(arquivo2, 'r') as f:
         usuarios = json.load(f)
 
-    usuarios.append({'CPF': cpf, 'nome': nome, 'número': numero_telefone, 'observacoes': observacoes, 'idade': idade})
+    usuarios.append({'cpf': cpf, 'nome': nome, 'numero': numero, 'observacoes': observacoes, 'idade': idade})
 
     with open(arquivo2, 'w') as f:
         json.dump(usuarios, f, indent=4)
@@ -38,17 +38,17 @@ def login(cpf):
     with open(arquivo2, 'r') as f:
         usuarios = json.load(f)
     for usuario in usuarios:
-        if usuario['CPF'] == cpf:
+        if usuario['cpf'] == cpf:
             return True
         return False
 
     with open(arquivo2, 'w') as f:
         json.dump(usuarios, f, indent=4)
-        print("USUARIO ENCONTRADO COM SUCESSO!")
+        print("LOGIN EFETUADO COM SUCESSO!")
         
 
 def entrar_como_visitante():
-    visitante = input(print("ESCREVA SEU NOME: "))
+    visitante = input("ESCREVA SEU NOME: ")
     print("Início de atendimento!\n OLÁ ", visitante)
 
 def editar_usuario(cpf, nome_novo, numero_novo, observacoes_novas, nova_idade):
@@ -56,11 +56,12 @@ def editar_usuario(cpf, nome_novo, numero_novo, observacoes_novas, nova_idade):
         usuarios = json.load(f)
 
     for usuario in usuarios:
-        if usuario['CPF'] == cpf:
+        if usuario['cpf'] == cpf:
             usuario['nome'] = nome_novo
-            usuario['número'] = numero_novo
+            usuario['numero'] = numero_novo
             usuario['observacoes'] = observacoes_novas
             usuario['idade'] = nova_idade
+            break
 
     with open(arquivo2, 'w') as f:
         json.dump(usuarios, f, indent=4)
@@ -71,24 +72,23 @@ def excluir_usuario(cpf):
         usuarios = json.load(f)
 
     for usuario in usuarios:  
-        if usuario['CPF'] == cpf:
+        if usuario['cpf'] == cpf:
             usuarios.remove(usuario)
 
     with open(arquivo2, 'w') as f:
         json.dump(usuarios, f, indent=4)
         print("USUÁRIO EXCLUÍDO COM SUCESSO!")
 
-def buscar_usuario (cpf):
+def buscar_usuario(cpf):
     with open(arquivo2, 'r') as f:
         usuarios = json.load(f)
     
     encontrado = False
 
     for usuario in usuarios:
-        if usuario['CPF'] == cpf:
+        if usuario['cpf'] == cpf:
             print(f"CPF: {usuario['cpf']}, NOME: {usuario['nome']}, NUMERO: {usuario['numero']}, OBSERVACOES: {usuario['observacoes']}, IDADE: {usuario['idade']}")
             encontrado = True
-
     if not encontrado:
             print("NENHUM USUÁRIO ENCONTRADO.")      
 
@@ -175,6 +175,11 @@ def buscar_produto(codigo_produto):
         
     if not encontrado:
         print("NENHUM PRODUTO CADASTRADO COM ESSE CÓDIGO.")
+
+def verificar_arquivo_pedidos():
+    if not os.path.exists(arquivo3):
+        with open(arquivo3, 'w') as f:
+            json.dump([], f)
 
 def mostrar_menu(categoria):
     with open(arquivo3, 'r', encoding="utf-8") as f:  # Especifica o encoding UTF-8
@@ -345,8 +350,9 @@ def menu_usuarios():
     print("4. EDITAR PERFIL")
     print("5. EXCLUIR PERFIL")
     print("6. LISTAR USUARIOS")
-    print("7. VOLTAR AO MENU ANTERIOR")
-    print("8. SAIR")
+    print("7. BUSCAR PERFIL")
+    print("8. VOLTAR AO MENU ANTERIOR")
+    print("9. SAIR")
 
 def menu_produtos():
     print("\nMENU DE PRODUTOS!")
@@ -395,6 +401,7 @@ def menu_bebida():
 def main():
     verificar_arquivo_produto()
     verificar_arquivo_clientes()
+    verificar_arquivo_pedidos()
     
     while True:
         menu_inicial()
@@ -418,7 +425,7 @@ def main():
                         cpf = input("Digite seu CPF: ")
                         usuario = login(cpf)
                         if(usuario):
-                            print("Usuario encontrado!")
+                            print("LOGIN EFETUADO COM SUCESSO!")
                         else:
                             print("Usuario nao encontrado")
                         break
@@ -429,11 +436,12 @@ def main():
                         break
 
                     elif opcao == "4":
+                        cpf = float(input("DIGITE O CPF DA PESSOA QUE SERA ATUALIZADO:\n>>>"))
                         nome_novo = input("DIGITE O NOVO NOME:\n>>> ")
-                        numero_novo = input("DIGITE O NOVO NUMERO:\n>>> ")
+                        numero_novo = float(input("DIGITE O NOVO NUMERO:\n>>> "))
                         nova_idade = int(input("DIGITE A NOVA IDADE:\n>>> "))
                         observacoes_novas = input("DIGITE A NOVA OBSERVACAO:\n>>> ")
-                        atualizar_produto(nome_novo, numero_novo, nova_idade, observacoes_novas)
+                        editar_usuario(cpf, nome_novo, numero_novo, nova_idade, observacoes_novas)
                     
                     elif opcao == "5":
                         cpf = float(input("DIGITE O CPF QUE DESEJA EXCLUIR:\n>>> "))
@@ -441,13 +449,17 @@ def main():
                         
                     elif opcao == "6":
                         listar_usuarios()
-                        
+
                     elif opcao == "7":
+                        cpf = float(input("DIGITE O CPF DO USUÁRIO:\n>>>"))
+                        buscar_usuario(cpf)
+                        
+                    elif opcao == "8":
                         print("VOLTAR AO MENU ANTERIOR...")
                         sleep(3)
                         break
                     
-                    elif opcao == "8":
+                    elif opcao == "9":
                         print("Saindo...")
                         break
 
@@ -497,6 +509,7 @@ def main():
             case 3:  # Menu de pedidos
                 fazer_pedido()  # Chama a função para fazer o pedido completo
                 pedido = {}  # Limpa o pedido após a finalização
+
             case 4:
                 print("🚀 SAINDO...")
                 sleep(3)
