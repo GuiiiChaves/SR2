@@ -262,7 +262,7 @@ def menu_produtos():
     print("7. SAIR")
 
 def main():
-    verificar_arquivo()
+    verificar_arquivo_produto()
 
     while True:
         menu_inicial()
