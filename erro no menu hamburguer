@@ -10,6 +10,7 @@ numero_pedido = 0
 contador_pedidos = 0
 pedido = {}
 
+
 class Cor:
     VERMELHO = '\033[91m'
     VERDE = '\033[92m'
@@ -19,11 +20,13 @@ class Cor:
     CIANO = '\033[96m'
     RESET = '\033[0m'
 
+
 def verificar_arquivo_clientes():
     if not os.path.exists(arquivo2):
         with open(arquivo2, 'w') as f:
-            json.dump([], f) 
-            
+            json.dump([], f)
+
+
 def cadastrar_usuario(cpf, nome, numero, observacoes, idade):
     with open(arquivo2, 'r') as f:
         usuarios = json.load(f)
@@ -33,6 +36,7 @@ def cadastrar_usuario(cpf, nome, numero, observacoes, idade):
     with open(arquivo2, 'w') as f:
         json.dump(usuarios, f, indent=4)
     print("USUARIO CADASTRADO COM SUCESSO!")
+
 
 def login(cpf):
     with open(arquivo2, 'r') as f:
@@ -45,11 +49,12 @@ def login(cpf):
     with open(arquivo2, 'w') as f:
         json.dump(usuarios, f, indent=4)
         print("LOGIN EFETUADO COM SUCESSO!")
-        
+
 
 def entrar_como_visitante():
     visitante = input("ESCREVA SEU NOME: ")
     print("Início de atendimento!\n OLÁ ", visitante)
+
 
 def editar_usuario(cpf, nome_novo, numero_novo, observacoes_novas, nova_idade):
     with open(arquivo2, 'r') as f:
@@ -67,11 +72,12 @@ def editar_usuario(cpf, nome_novo, numero_novo, observacoes_novas, nova_idade):
         json.dump(usuarios, f, indent=4)
     print("USUÁRIO ATUALIZADO COM SUCESSO!")
 
+
 def excluir_usuario(cpf):
     with open(arquivo2, 'r') as f:
         usuarios = json.load(f)
 
-    for usuario in usuarios:  
+    for usuario in usuarios:
         if usuario['cpf'] == cpf:
             usuarios.remove(usuario)
 
@@ -79,48 +85,55 @@ def excluir_usuario(cpf):
         json.dump(usuarios, f, indent=4)
         print("USUÁRIO EXCLUÍDO COM SUCESSO!")
 
+
 def buscar_usuario(cpf):
     with open(arquivo2, 'r') as f:
         usuarios = json.load(f)
-    
+
     encontrado = False
 
     for usuario in usuarios:
         if usuario['cpf'] == cpf:
-            print(f"CPF: {usuario['cpf']}, NOME: {usuario['nome']}, NUMERO: {usuario['numero']}, OBSERVACOES: {usuario['observacoes']}, IDADE: {usuario['idade']}")
+            print(
+                f"CPF: {usuario['cpf']}, NOME: {usuario['nome']}, NUMERO: {usuario['numero']}, OBSERVACOES: {usuario['observacoes']}, IDADE: {usuario['idade']}")
             encontrado = True
     if not encontrado:
-            print("NENHUM USUÁRIO ENCONTRADO.")      
+        print("NENHUM USUÁRIO ENCONTRADO.")
+
 
 def listar_usuarios():
     with open(arquivo2, 'r') as f:
         usuarios = json.load(f)
 
     if usuarios:
-        print("=" *60)
+        print("=" * 60)
         print("LISTA DE USUÁRIOS:")
-        print("-" *60)
+        print("-" * 60)
         for usuario in usuarios:
-            print("*" *60)
-            print(f"CPF: {usuario['cpf']}, NOME: {usuario['nome']}, NUMERO: {usuario['numero']}, OBSERVACOES: {usuario['observacoes']}, IDADE: {usuario['idade']}")
-            print("*" *60)
-            print("=" *60)      
+            print("*" * 60)
+            print(
+                f"CPF: {usuario['cpf']}, NOME: {usuario['nome']}, NUMERO: {usuario['numero']}, OBSERVACOES: {usuario['observacoes']}, IDADE: {usuario['idade']}")
+            print("*" * 60)
+            print("=" * 60)
+
 
 def verificar_arquivo_produto():
     if not os.path.exists(arquivo):
         with open(arquivo, 'w') as f:
             json.dump([], f)
 
+
 def cadastrar_produto(codigo_produto, tipo_produto):
     with open(arquivo, 'r') as f:
         codigo_produtos = json.load(f)
-        
+
     codigo_produtos.append({"codigo": codigo_produto, "tipo": tipo_produto})
 
     with open(arquivo, 'w') as f:
         json.dump(codigo_produtos, f, indent=4)
     print("Produto cadastrado com sucesso!")
-    
+
+
 def listar_produtos():
     with open(arquivo, 'r') as f:
         codigo_produtos = json.load(f)
@@ -137,6 +150,7 @@ def listar_produtos():
     else:
         print("NENHUM PRODUTO CADASTRADO.")
 
+
 def atualizar_produto(codigo_produto_antigo, novo_codigo_produto, novo_tipo_produto):
     with open(arquivo, 'r') as f:
         codigo_produtos = json.load(f)
@@ -151,6 +165,7 @@ def atualizar_produto(codigo_produto_antigo, novo_codigo_produto, novo_tipo_prod
         json.dump(codigo_produtos, f, indent=4)
     print("PRODUTO ATUALIZADO COM SUCESSO!")
 
+
 def excluir_produto(codigo_produto):
     with open(arquivo, 'r') as f:
         codigo_produtos = json.load(f)
@@ -161,10 +176,11 @@ def excluir_produto(codigo_produto):
         json.dump(codigo_produtos, f, indent=4)
     print("PRODUTO EXCLUÍDO COM SUCESSO!")
 
+
 def buscar_produto(codigo_produto):
     with open(arquivo, 'r') as f:
         codigo_produtos = json.load(f)
-    
+
     encontrado = False
 
     for produto in codigo_produtos:
@@ -172,18 +188,24 @@ def buscar_produto(codigo_produto):
             print(f"CODIGO: {produto['codigo']}, TIPO: {produto['tipo']}")
             encontrado = True
             break
-        
+
     if not encontrado:
         print("NENHUM PRODUTO CADASTRADO COM ESSE CÓDIGO.")
+
 
 def verificar_arquivo_pedidos():
     if not os.path.exists(arquivo3):
         with open(arquivo3, 'w') as f:
             json.dump([], f)
 
+
 def mostrar_menu(categoria):
-    with open(arquivo3, 'r', encoding="utf-8") as f:  # Especifica o encoding UTF-8
-        cardapio = json.load(f)  # Usa a variável correta 'cardapio'
+    with open(arquivo3, 'r', encoding="utf-8") as f:
+        cardapio = json.load(f)
+
+    if categoria not in cardapio:
+        print(f"Nenhuma categoria chamada {categoria} encontrada.")
+        return
 
     print(f"Menu de {categoria}:")
     for numero, item in cardapio[categoria].items():
@@ -199,7 +221,7 @@ def fazer_pedido():
     contador_pedidos += 1
     numero_pedido = contador_pedidos
     print(f"Pedido nº {numero_pedido}\n")
-    pedido = {}  
+    pedido = {}
 
     with open(arquivo3, 'r', encoding="utf-8") as f:
         cardapio = json.load(f)
@@ -232,8 +254,6 @@ def fazer_pedido():
                     escolha = input(f"Escolha um item de {categoria} ou digite 'v' para voltar: ")
                     if escolha.lower() == 'v':
                         break  # Volta para o menu de categorias
-                    elif escolha == '5':
-                        continue  # Volta para o inicio do loop caso o usuário digite 5
                     if escolha in cardapio[categoria]:
                         quantidade = int(input("Digite a quantidade: "))
                         item = cardapio[categoria][escolha]
@@ -246,11 +266,9 @@ def fazer_pedido():
         else:
             print("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
 
-
     mostrar_resumo(numero_pedido)
     editar_pedido(numero_pedido)
     adicionar_comentario()
-    
 
 def menu_pedidos():
     print("\nESSE É O NOSSO CARDÁPIO!")
@@ -259,12 +277,13 @@ def menu_pedidos():
     print("3. ACOMPANHAMENTOS")
     print("4. VOLTAR AO MENU ANTERIOR")
     print("5. RESUMO DO PEDIDO")  # Mudança para a opção 5
-    print("6. SAIR")  # Mudança para a opção 
+    print("6. SAIR")  # Mudança para a opção
 
     mostrar_resumo(numero_pedido)
     editar_pedido(numero_pedido)
     adicionar_comentario()
-    
+
+
 def mostrar_resumo(numero_pedido):
     print(f"\nResumo do pedido nº {numero_pedido}:")
     total_kcal = 0
@@ -272,9 +291,11 @@ def mostrar_resumo(numero_pedido):
     for i, (item, detalhes) in enumerate(pedido.items(), 1):
         total_kcal += detalhes['kcal'] * detalhes['quantidade']
         total_valor += detalhes['valor'] * detalhes['quantidade']
-        print(f"{i}. {detalhes['quantidade']}x {item} - {detalhes['kcal']} kcal - Valor: R${detalhes['valor'] * detalhes['quantidade']:.2f}")
+        print(
+            f"{i}. {detalhes['quantidade']}x {item} - {detalhes['kcal']} kcal - Valor: R${detalhes['valor'] * detalhes['quantidade']:.2f}")
     print(f"Total de kcal do pedido: {total_kcal} kcal")
     print(f"Valor total do pedido: R${total_valor:.2f}")
+
 
 def editar_pedido(numero_pedido, cardapio):
     """Permite ao usuário editar a quantidade de itens em um pedido existente."""
@@ -304,7 +325,8 @@ def editar_pedido(numero_pedido, cardapio):
                             if item['nome'] in pedido:
                                 pedido[item['nome']]['quantidade'] += quantidade
                             else:
-                                pedido[item['nome']] = {'quantidade': quantidade, 'kcal': item['kcal'], 'valor': item['valor']}
+                                pedido[item['nome']] = {'quantidade': quantidade, 'kcal': item['kcal'],
+                                                        'valor': item['valor']}
                         else:
                             print("Escolha inválida, tente novamente.")
                     break  # Sai do loop de escolha de categoria após adicionar itens
@@ -320,11 +342,13 @@ def editar_pedido(numero_pedido, cardapio):
                     pedido[item_nome]['quantidade'] = nova_quantidade
             except (ValueError, IndexError):
                 print("Item não encontrado no pedido.")
-        
+
         # Pergunta se o usuário deseja continuar alterando
         continuar_alterando = input("Deseja alterar outro item? (S/N): ")
         if continuar_alterando.upper() != 'S':
             break
+
+
 def adicionar_comentario():
     comentario = input("Deseja adicionar um comentário ao pedido? (Deixe em branco para nenhum): ")
     if comentario:
@@ -332,6 +356,7 @@ def adicionar_comentario():
     else:
         print("Nenhum comentário adicionado.")
     print("Obrigado por fazer seu pedido!")
+
 
 def menu_inicial():
     print(Cor.AZUL + "=" * 65 + Cor.RESET)
@@ -341,6 +366,7 @@ def menu_inicial():
     print("          3 -- FAZER PEDIDO")
     print("          4 -- SAIR")
     print(Cor.AZUL + "=" * 65 + Cor.RESET)
+
 
 def menu_usuarios():
     print("\nMENU DE USUÁRIOS!")
@@ -354,6 +380,7 @@ def menu_usuarios():
     print("8. VOLTAR AO MENU ANTERIOR")
     print("9. SAIR")
 
+
 def menu_produtos():
     print("\nMENU DE PRODUTOS!")
     print("1. CADASTRAR PRODUTO")
@@ -364,6 +391,7 @@ def menu_produtos():
     print("6. VOLTAR AO MENU ANTERIOR")
     print("7. SAIR")
 
+
 def menu_pedidos():
     print("\nESSE É O NOSSO CARDÁPIO!")
     print("\nESSE É O NOSSO CARDÁPIO!")
@@ -371,15 +399,22 @@ def menu_pedidos():
     print("2. BEBIDAS")
     print("3. ACOMPANHAMENTOS")
     print("4. VOLTAR AO MENU ANTERIOR")
-    print("5. RESUMO DO PEDIDO")  
-    print("6. SAIR")  
+    print("5. RESUMO DO PEDIDO")
+    print("6. SAIR")
+
 
 def menu_hamburguer():
-    print("1 -> CLASSICO (780cal) -> INGREDIENTES: pao brioche; hamburguer bovino(180g); queijo cheddar; alface; tomate; cebola; valor --> R$")
-    print("2 -> BACON MANIA (830cal) -> INGREDIENTES: pao australiano; hamburguer angus(180g); queijo mussarela; bacon; alface; tomate; cebola; molho barbecue; valor --> R$")
-    print("3 -> FRANGO GRELHADO (530cal) -> INGREDIENTES: pao brioche; carne de porco(180g); queijo gruyère; bacon; picles; molho mostarda; valor --> R$")
-    print("4 -> PORCO C/ QUEIJO (860cal) -> INGREDIENTES: pao integral; peito de frango grelhado(180g); queijo prato; presunto; tomate; alface; ketchup; valor --> R$")
-    print("5 -> EXPLOSAO DE SABOR (855cal) -> INGREDIENTES: pao australiano; hamburguer angus(180g); queijo cheddar; bacon; alface; tomate; maionese; valor --> R$")
+    print(
+        "1 -> CLASSICO (780cal) -> INGREDIENTES: pao brioche; hamburguer bovino(180g); queijo cheddar; alface; tomate; cebola; valor --> R$")
+    print(
+        "2 -> BACON MANIA (830cal) -> INGREDIENTES: pao australiano; hamburguer angus(180g); queijo mussarela; bacon; alface; tomate; cebola; molho barbecue; valor --> R$")
+    print(
+        "3 -> FRANGO GRELHADO (530cal) -> INGREDIENTES: pao brioche; carne de porco(180g); queijo gruyère; bacon; picles; molho mostarda; valor --> R$")
+    print(
+        "4 -> PORCO C/ QUEIJO (860cal) -> INGREDIENTES: pao integral; peito de frango grelhado(180g); queijo prato; presunto; tomate; alface; ketchup; valor --> R$")
+    print(
+        "5 -> EXPLOSAO DE SABOR (855cal) -> INGREDIENTES: pao australiano; hamburguer angus(180g); queijo cheddar; bacon; alface; tomate; maionese; valor --> R$")
+
 
 def menu_acompanhamento():
     print("1. Batata Rústica; porção: 100g, cal: 200g, valor: 20.00")
@@ -387,6 +422,7 @@ def menu_acompanhamento():
     print("3. Batata Frita; porção: 100g, cal: 300, valor: 15.00")
     print("4. Batata Bacon; porção: 100g, cal: 350, valor: 25.00")
     print("5. Onion Rings; porção: 100g, cal: 250, valor: 20.00")
+
 
 def menu_bebida():
     print("1. Água com gás, cal: 0, valor: 5.00")
@@ -398,16 +434,17 @@ def menu_bebida():
     print("7. Coca-Cola, cal: 140, valor: 10.00")
     print("8. Fanta, cal: 160, valor: 10.00")
 
+
 def main():
     verificar_arquivo_produto()
     verificar_arquivo_clientes()
     verificar_arquivo_pedidos()
-    
+
     while True:
         menu_inicial()
         escolha = int(input("ESCOLHA UMA OPÇÃO:\n>>> "))
 
-        match(escolha):
+        match (escolha):
             case 1:
                 while True:
                     menu_usuarios()
@@ -424,7 +461,7 @@ def main():
                     elif opcao == "2":
                         cpf = input("Digite seu CPF: ")
                         usuario = login(cpf)
-                        if(usuario):
+                        if (usuario):
                             print("LOGIN EFETUADO COM SUCESSO!")
                         else:
                             print("Usuario nao encontrado")
@@ -442,23 +479,23 @@ def main():
                         nova_idade = int(input("DIGITE A NOVA IDADE:\n>>> "))
                         observacoes_novas = input("DIGITE A NOVA OBSERVACAO:\n>>> ")
                         editar_usuario(cpf, nome_novo, numero_novo, nova_idade, observacoes_novas)
-                    
+
                     elif opcao == "5":
                         cpf = float(input("DIGITE O CPF QUE DESEJA EXCLUIR:\n>>> "))
                         excluir_usuario(cpf)
-                        
+
                     elif opcao == "6":
                         listar_usuarios()
 
                     elif opcao == "7":
                         cpf = float(input("DIGITE O CPF DO USUÁRIO:\n>>>"))
                         buscar_usuario(cpf)
-                        
+
                     elif opcao == "8":
                         print("VOLTAR AO MENU ANTERIOR...")
                         sleep(3)
                         break
-                    
+
                     elif opcao == "9":
                         print("Saindo...")
                         break
@@ -475,7 +512,7 @@ def main():
                         codigo_produto = input("CODIGO DO PRODUTO:\n>>> ")
                         tipo_produto = input("TIPO DO PRODUTO:\n>>> ")
                         cadastrar_produto(codigo_produto, tipo_produto)
-                        
+
                     elif opcao == "2":
                         listar_produtos()
 
@@ -517,6 +554,7 @@ def main():
 
             case __:
                 print("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
+
 
 if __name__ == "__main__":
     main()
