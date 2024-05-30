@@ -1,0 +1,108 @@
+{
+  "hamburgueres": {
+    "1": {
+      "nome": "CLASSICO",
+      "ingredientes": "pao brioche; hamburguer bovino(180g); queijo cheddar; alface; tomate; cebola",
+      "kcal": 780,
+      "valor": 25.00
+    },
+    "2": {
+      "nome": "BACON MANIA",
+      "ingredientes": "pao australiano; hamburguer angus(180g); queijo mussarela; bacon; alface; tomate; cebola; molho barbecue",
+      "kcal": 830,
+      "valor": 30.00
+    },
+    "3": {
+      "nome": "FRANGO GRELHADO",
+      "ingredientes": "pao brioche; carne de porco(180g); queijo gruyère; bacon; picles; molho mostarda",
+      "kcal": 530,
+      "valor": 28.00
+    },
+    "4": {
+      "nome": "PORCO C/ QUEIJO",
+      "ingredientes": "pao integral; peito de frango grelhado(180g); queijo prato; presunto; tomate; alface; ketchup",
+      "kcal": 860,
+      "valor": 27.00
+    },
+    "5": {
+      "nome": "EXPLOSAO DE SABOR",
+      "ingredientes": "pao australiano; hamburguer angus(180g); queijo cheddar; bacon; alface; tomate; maionese",
+      "kcal": 855,
+      "valor": 32.00
+    }
+  },
+  "bebidas": {
+    "1": {
+      "nome": "Água com gás",
+      "kcal": 0,
+      "valor": 5.00
+    },
+    "2": {
+      "nome": "Água sem gás",
+      "kcal": 0,
+      "valor": 4.00
+    },
+    "3": {
+      "nome": "Suco de Laranja",
+      "kcal": 120,
+      "valor": 8.00
+    },
+    "4": {
+      "nome": "Suco de Acerola",
+      "kcal": 100,
+      "valor": 8.00
+    },
+    "5": {
+      "nome": "Suco de Caja",
+      "kcal": 110,
+      "valor": 8.50
+    },
+    "6": {
+      "nome": "Guaraná Antarctica",
+      "kcal": 150,
+      "valor": 10.00
+    },
+    "7": {
+      "nome": "Coca-Cola",
+      "kcal": 140,
+      "valor": 10.00
+    },
+    "8": {
+      "nome": "Fanta",
+      "kcal": 160,
+      "valor": 10.00
+    }
+  },
+  "acompanhamentos": {
+    "1": {
+      "nome": "Batata Rústica",
+      "porção": "100g",
+      "kcal": 200,
+      "valor": 20.00
+    },
+    "2": {
+      "nome": "Batata Canoa",
+      "porção": "100g",
+      "kcal": 220,
+      "valor": 20.00
+    },
+    "3": {
+      "nome": "Batata Frita",
+      "porção": "100g",
+      "kcal": 300,
+      "valor": 15.00
+    },
+    "4": {
+      "nome": "Batata Bacon",
+      "porção": "100g",
+      "kcal": 350,
+      "valor": 25.00
+    },
+    "5": {
+      "nome": "Onion Rings",
+      "porção": "100g",
+      "kcal": 250,
+      "valor": 20.00
+    }
+  }
+}
