@@ -230,7 +230,7 @@ def fazer_pedido():
         menu_pedidos()
         opcao = input("ESCOLHA UMA OPÇÃO:\n>>> ")
 
-        if opcao == '6':  # Sair do menu de pedidos
+        if opcao == '6':
             break
 
         if opcao in ["1", "2", "3", "5"]:
@@ -239,21 +239,22 @@ def fazer_pedido():
                 while True:
                     acao = input("Deseja confirmar (c), alterar quantidade (a) ou voltar (v)? ")
                     if acao.lower() == 'c':
+                        adicionar_comentario()  # Chama a função para adicionar comentário diretamente
                         return  # Retorna ao menu principal após confirmar o pedido
                     elif acao.lower() == 'a':
                         editar_pedido(numero_pedido, cardapio)
                         mostrar_resumo(numero_pedido)
                     elif acao.lower() == 'v':
-                        break  # Volta para o menu de categorias
+                        break
                     else:
                         print("Opção inválida. Tente novamente.")
-            else:  # Escolha de categoria
+            else:
                 categoria = ["hamburgueres", "bebidas", "acompanhamentos"][int(opcao) - 1]
                 mostrar_menu(categoria)
-                while True:  # Loop para escolher itens dentro da categoria
+                while True:
                     escolha = input(f"Escolha um item de {categoria} ou digite 'v' para voltar: ")
                     if escolha.lower() == 'v':
-                        break  # Volta para o menu de categorias
+                        break
                     if escolha in cardapio[categoria]:
                         quantidade = int(input("Digite a quantidade: "))
                         item = cardapio[categoria][escolha]
@@ -265,6 +266,7 @@ def fazer_pedido():
                         print("Escolha inválida, tente novamente.")
         else:
             print("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
+
 
     mostrar_resumo(numero_pedido)
     editar_pedido(numero_pedido)
