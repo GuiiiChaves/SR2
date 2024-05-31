@@ -545,14 +545,9 @@ def main():
                     else:
                         print("OPÇÃO INVÁLIDA. TENTE NOVAMENTE!")
 
-            case 3: 
-                while True:
-                    menu_pedidos()
-                    opcao_pedidos = input("ESCOLHA UMA OPÇÃO:\n>>> ")
-                    if opcao_pedidos == "1":
-                        menu_hamburguer()
-                        fazer_pedido()  
-                        pedido = {}  
+            case 3:  # Menu de pedidos
+                fazer_pedido()  # Chama a função para fazer o pedido completo
+                pedido = {}  # Limpa o pedido após a finalização
 
             case 4:
                 print("🚀 SAINDO...")
