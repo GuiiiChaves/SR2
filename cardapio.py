@@ -17,11 +17,11 @@ def verificar_arquivo_pedidos():
         with open(arquivo3, 'w') as file_:
             json.dump([], file_)
 
-def fazer_pedido(nome, numero_pedido, hamburguer, quantidade_hamburguer, bebida, quantidade_bebida, acompanhamento, quantidade_acompanhamento, observacao_pedido):
+def cadastro_pedidos(nome_cliente, numero_pedido, hamburguer, quantidade_hamburguer, bebida, quantidade_bebida, acompanhamento, quantidade_acompanhamento, observacao_pedido):
     with open(arquivo3, 'r') as file_:
         pedidos = json.load(file_)
 
-    pedidos.append({'Nome': nome, 'Numero do pedido': numero_pedido, 'Hamburguer': hamburguer, 'Quantidade hamburguer': quantidade_hamburguer, 'Bebida': bebida, 'Quantidade bebida': quantidade_bebida, 'Acompanhamento': acompanhamento, 'Quantidade acompanhamento': quantidade_acompanhamento, 'Observacao do pedido': observacao_pedido})
+    pedidos.append({'Nome': nome_cliente, 'Numero do pedido': numero_pedido, 'Hamburguer': hamburguer, 'Quantidade hamburguer': quantidade_hamburguer, 'Bebida': bebida, 'Quantidade bebida': quantidade_bebida, 'Acompanhamento': acompanhamento, 'Quantidade acompanhamento': quantidade_acompanhamento, 'Observacao do pedido': observacao_pedido})
 
     with open(arquivo3, 'w') as file_:
         json.dump(pedidos, file_, indent=4)
@@ -59,6 +59,22 @@ def excluir_pedido(numero_pedido):
         json.dump(pedidos, file_, indent=4)
     print("PEDIDO EXCLUÍDO COM SUCESSO!")
 
+def listar_pedidos():
+    with open(arquivo3, 'r') as file_:
+        pedidos = json.load(file_)
+
+    if pedidos:
+        print("=" *90)
+        print("LISTA DE PEDIDOS:")
+        print("-" *90)
+        for pedido in pedidos:
+            print("*" *90)
+            print(f"NOME: {pedido['Nome']}, NUMERO DO PEDIDO: {pedido['Numero do pedido']}, HAMBURGUER: {pedido['Hamburguer']}, QUANTIDADE HAMBURGUER: {pedido['Quantidade hamburguer']}, BEBIDA: {pedido['Bebida']}, QUANTIDADE BEBIDA: {pedido['Quantidade bebida']}, ACOMPANHAMENTO: {pedido['Acompanhamento']}, QUANTIDADE ACOMPANHAMENTO: {pedido['Quantidade acompanhemento']}, OBSERVACAO: {pedido['Observacao do pedido']}")
+            print("*" *90)
+            print("=" *90)
+    else:
+        print("NENHUM PEDIDO CADASTRADO!.")
+
 
 def confirmar_pedido():
     confirmacao = input("Deseja confirmar o pedido? (S/N): ").upper()
@@ -78,10 +94,11 @@ def menu_pedidos():
     print("1. HAMBURGUERES")
     print("2. BEBIDAS")
     print("3. ACOMPANHAMENTOS")
-    print("4. RESUMO DO PEDIDO")
-    print("5. EDITAR PEDIDO")
-    print("6. EXCUIR PEDIDO")  
-    print("7. VOLTAR AO MENU ANTERIOR")
+    print("4. FINALIZAR PEDIDO")
+    print("5. LISTAR PEDIDOS")
+    print("6. EDITAR PEDIDO")
+    print("7. EXCUIR PEDIDO")  
+    print("8. VOLTAR AO MENU ANTERIOR")
 
 def menu_hamburguer():
     print("1. CLASSICO (780cal) => INGREDIENTES: pao brioche; hamburguer bovino(180g); queijo cheddar; alface; tomate; cebola; valor --> R$25.00")
@@ -128,7 +145,7 @@ def main():
         elif escolha == '3':
             contador_pedidos += 1
             numero_pedido = contador_pedidos
-            nome = input("Informe o seu nome:\n>>> ")
+            nome_cliente = input("Informe o seu nome:\n>>> ")
             print(f"Pedido nº {numero_pedido}\n")
                 
             hamburguer = None
@@ -170,44 +187,50 @@ def main():
                 if opcao_pedidos == '1':
                     menu_hamburguer()
                     opcao_hamburguer = input("ESCOLHA UMA OPÇÃO:\n>>> ")
-                    hamburguer = hamburguer_nome.get(opcao_hamburguer, "Opção Inválida")
+                    hamburguer = hamburguer_nome.get(opcao_hamburguer, "OPCAO INVALIDA")
                     quantidade_hamburguer = int(input("Informe a quantidade desejada:\n>>> "))
                     observacao_pedido = input("Observacao:\n>>> ")
                 
                 elif opcao_pedidos == '2':
                     menu_bebida()
                     opcao_bebida = input("ESCOLHA UMA OPÇÃO:\n>>> ")
-                    bebida = bebida_nome.get(opcao_bebida, "Opção Inválida")
+                    bebida = bebida_nome.get(opcao_bebida, "OPCAO INVALIDA")
                     quantidade_bebida = int(input("Informe a quantidade desejada:\n>>> "))
                 
                 elif opcao_pedidos == '3':
                     menu_acompanhamento()
                     opcao_acompanhamento = input("ESCOLHA UMA OPÇÃO:\n>>> ")
-                    acompanhamento = acompanhamento_nome.get(opcao_acompanhamento, "Opção Inválida")
+                    acompanhamento = acompanhamento_nome.get(opcao_acompanhamento, "OPCAO INVALIDA")
                     quantidade_acompanhamento = int(input("Informe a quantidade desejada:\n>>> "))
                 
                 elif opcao_pedidos == '4':
                     print(f"Resumo do pedido nº {numero_pedido}:")
-                    print(f"Nome: {nome}")
+                    print(f"Nome: {nome_cliente}")
                     print(f"Hamburguer: {hamburguer} - Quantidade: {quantidade_hamburguer}")
                     print(f"Bebida: {bebida} - Quantidade: {quantidade_bebida}")
                     print(f"Acompanhamento: {acompanhamento} - Quantidade: {quantidade_acompanhamento}")
                     print(f"Observacao do pedido: {observacao_pedido}")
 
                     if confirmar_pedido():
-                        fazer_pedido(nome, numero_pedido, hamburguer, quantidade_hamburguer, bebida, quantidade_bebida, acompanhamento, quantidade_acompanhamento, observacao_pedido)
+                        cadastro_pedidos(nome_cliente, numero_pedido, hamburguer, quantidade_hamburguer, bebida, quantidade_bebida, acompanhamento, quantidade_acompanhamento, observacao_pedido)
+                        break
 
                     else:
                         novo_hamburguer = input("Novo Hamburguer:\n>>> ")
-                        nova_quantidade_hamburguer = input("Nova quantidade:\n>>> ")
+                        nova_quantidade_hamburguer = int(input("Nova quantidade:\n>>> "))
                         nova_bebida = input("Nova Bebida:\n>>> ")
-                        nova_quantidade_bebida = input("Nova quantidade:\n>>> ")
+                        nova_quantidade_bebida = int(input("Nova quantidade:\n>>> "))
                         novo_acompanhamento = input("Novo Acompanhamento:\n>>> ")
-                        nova_quantidade_acompanhamento = input("Nova quantidade:\n>>> ")
+                        nova_quantidade_acompanhamento = int(input("Nova quantidade:\n>>> "))
                         nova_observacao_pedido = input("Nova observacao:\n>>> ")
                         editar_pedido(numero_pedido, novo_hamburguer, nova_quantidade_hamburguer, nova_bebida, nova_quantidade_bebida, novo_acompanhamento, nova_quantidade_acompanhamento, nova_observacao_pedido)                        
+                        break
 
                 elif opcao_pedidos == '5':
+                    listar_pedidos()
+
+                elif opcao_pedidos == '6':
+                        numero_pedido = input("Numero do pedido a ser editado:\n>>> ")
                         novo_hamburguer = input("Novo Hamburguer:\n>>> ")
                         nova_quantidade_hamburguer = int(input("Nova quantidade:\n>>> "))
                         nova_bebida = input("Nova Bebida:\n>>> ")
@@ -216,12 +239,13 @@ def main():
                         nova_quantidade_acompanhamento = int(input("Nova quantidade:\n>>> "))
                         nova_observacao_pedido = input("Nova observacao:\n>>> ")
                         editar_pedido(numero_pedido, novo_hamburguer, nova_quantidade_hamburguer, nova_bebida, nova_quantidade_bebida, novo_acompanhamento, nova_quantidade_acompanhamento, nova_observacao_pedido)
+                        break
                 
-                elif opcao_pedidos == '6':
+                elif opcao_pedidos == '7':
                     numero_pedido = int(input("DIGITE O NUMERO DO PEDIDO QUE DESEJA EXCLUIR:\n>>> "))
                     excluir_pedido(numero_pedido)
 
-                elif opcao_pedidos == '7':
+                elif opcao_pedidos == '8':
                     print("VOLTAR AO MENU ANTERIOR...")
                     break
 
