@@ -64,17 +64,16 @@ def listar_pedidos():
         pedidos = json.load(file_)
 
     if pedidos:
-        print("=" *90)
+        print("=" * 215)
         print("LISTA DE PEDIDOS:")
-        print("-" *90)
+        print("=" * 215)
         for pedido in pedidos:
-            print("*" *90)
-            print(f"NOME: {pedido['Nome']}, NUMERO DO PEDIDO: {pedido['Numero do pedido']}, HAMBURGUER: {pedido['Hamburguer']}, QUANTIDADE HAMBURGUER: {pedido['Quantidade hamburguer']}, BEBIDA: {pedido['Bebida']}, QUANTIDADE BEBIDA: {pedido['Quantidade bebida']}, ACOMPANHAMENTO: {pedido['Acompanhamento']}, QUANTIDADE ACOMPANHAMENTO: {pedido['Quantidade acompanhemento']}, OBSERVACAO: {pedido['Observacao do pedido']}")
-            print("*" *90)
-            print("=" *90)
+            print("*" * 215)
+            print(f"NOME: {pedido['Nome']}, NUMERO DO PEDIDO: {pedido['Numero do pedido']}, HAMBURGUER: {pedido['Hamburguer']}, QUANTIDADE HAMBURGUER: {pedido['Quantidade hamburguer']}, BEBIDA: {pedido['Bebida']}, QUANTIDADE BEBIDA: {pedido['Quantidade bebida']}, ACOMPANHAMENTO: {pedido['Acompanhamento']}, QUANTIDADE ACOMPANHAMENTO: {pedido['Quantidade acompanhamento']}, OBSERVACAO: {pedido['Observacao do pedido']}")
+            print("*" * 215)
+        print("=" * 215)
     else:
         print("NENHUM PEDIDO CADASTRADO!.")
-
 
 def confirmar_pedido():
     confirmacao = input("Deseja confirmar o pedido? (S/N): ").upper()
@@ -97,7 +96,7 @@ def menu_pedidos():
     print("4. FINALIZAR PEDIDO")
     print("5. LISTAR PEDIDOS")
     print("6. EDITAR PEDIDO")
-    print("7. EXCUIR PEDIDO")  
+    print("7. EXCLUIR PEDIDO")  
     print("8. VOLTAR AO MENU ANTERIOR")
 
 def menu_hamburguer():
@@ -123,7 +122,6 @@ def menu_bebida():
     print("6. Guarana Antartica => cal: 150, valor --> R$10.00")
     print("7. Coca-Cola => cal: 140, valor --> R$10.00")
     print("8. Fanta Laranja => cal: 160, valor --> R$10.00")
-
 
 def main():
     verificar_arquivo_pedidos()
@@ -154,6 +152,7 @@ def main():
             quantidade_bebida = None
             acompanhamento = None
             quantidade_acompanhamento = None
+            observacao_pedido = None
                 
             hamburguer_nome = {
                 '1': 'CLASSICO',
@@ -215,31 +214,19 @@ def main():
                         cadastro_pedidos(nome_cliente, numero_pedido, hamburguer, quantidade_hamburguer, bebida, quantidade_bebida, acompanhamento, quantidade_acompanhamento, observacao_pedido)
                         break
 
-                    else:
-                        novo_hamburguer = input("Novo Hamburguer:\n>>> ")
-                        nova_quantidade_hamburguer = int(input("Nova quantidade:\n>>> "))
-                        nova_bebida = input("Nova Bebida:\n>>> ")
-                        nova_quantidade_bebida = int(input("Nova quantidade:\n>>> "))
-                        novo_acompanhamento = input("Novo Acompanhamento:\n>>> ")
-                        nova_quantidade_acompanhamento = int(input("Nova quantidade:\n>>> "))
-                        nova_observacao_pedido = input("Nova observacao:\n>>> ")
-                        editar_pedido(numero_pedido, novo_hamburguer, nova_quantidade_hamburguer, nova_bebida, nova_quantidade_bebida, novo_acompanhamento, nova_quantidade_acompanhamento, nova_observacao_pedido)                        
-                        break
-
                 elif opcao_pedidos == '5':
                     listar_pedidos()
 
                 elif opcao_pedidos == '6':
-                        numero_pedido = input("Numero do pedido a ser editado:\n>>> ")
-                        novo_hamburguer = input("Novo Hamburguer:\n>>> ")
-                        nova_quantidade_hamburguer = int(input("Nova quantidade:\n>>> "))
-                        nova_bebida = input("Nova Bebida:\n>>> ")
-                        nova_quantidade_bebida = int(input("Nova quantidade:\n>>> "))
-                        novo_acompanhamento = input("Novo Acompanhamento:\n>>> ")
-                        nova_quantidade_acompanhamento = int(input("Nova quantidade:\n>>> "))
-                        nova_observacao_pedido = input("Nova observacao:\n>>> ")
-                        editar_pedido(numero_pedido, novo_hamburguer, nova_quantidade_hamburguer, nova_bebida, nova_quantidade_bebida, novo_acompanhamento, nova_quantidade_acompanhamento, nova_observacao_pedido)
-                        break
+                    numero_pedido = int(input("Numero do pedido a ser editado:\n>>> "))
+                    novo_hamburguer = input("Novo Hamburguer:\n>>> ")
+                    nova_quantidade_hamburguer = int(input("Nova quantidade:\n>>> "))
+                    nova_bebida = input("Nova Bebida:\n>>> ")
+                    nova_quantidade_bebida = int(input("Nova quantidade:\n>>> "))
+                    novo_acompanhamento = input("Novo Acompanhamento:\n>>> ")
+                    nova_quantidade_acompanhamento = int(input("Nova quantidade:\n>>> "))
+                    nova_observacao_pedido = input("Nova observacao:\n>>> ")
+                    editar_pedido(numero_pedido, novo_hamburguer, nova_quantidade_hamburguer, nova_bebida, nova_quantidade_bebida, novo_acompanhamento, nova_quantidade_acompanhamento, nova_observacao_pedido)
                 
                 elif opcao_pedidos == '7':
                     numero_pedido = int(input("DIGITE O NUMERO DO PEDIDO QUE DESEJA EXCLUIR:\n>>> "))
@@ -260,3 +247,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
