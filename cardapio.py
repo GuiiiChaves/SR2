@@ -218,14 +218,20 @@ def main():
                     listar_pedidos()
 
                 elif opcao_pedidos == '6':
-                    numero_pedido = int(input("Numero do pedido a ser editado:\n>>> "))
-                    novo_hamburguer = input("Novo Hamburguer:\n>>> ")
-                    nova_quantidade_hamburguer = int(input("Nova quantidade:\n>>> "))
-                    nova_bebida = input("Nova Bebida:\n>>> ")
+                    numero_pedido = int(input("NUMERO DO PEDIDO:\n>>> "))
+                    menu_hamburguer()
+                    opcao_hamburguer = input("ESCOLHA UMA NOVA OPÇÃO DE HAMBURGUER:\n>>> ")
+                    novo_hamburguer = hamburguer_nome.get(opcao_hamburguer, "OPCAO INVALIDA!")
+                    nova_quantidade_hamburguer = int(input("NOVA QUANTIDADE:\n>>> "))
+                    menu_bebida()
+                    opcao_bebida = input("ESCOLHA UMA NOVA OPÇÃO DE BEBIDA:\n>>> ")
+                    nova_bebida = bebida_nome.get(opcao_bebida, "OPCAO INVALIDA!")
                     nova_quantidade_bebida = int(input("Nova quantidade:\n>>> "))
-                    novo_acompanhamento = input("Novo Acompanhamento:\n>>> ")
-                    nova_quantidade_acompanhamento = int(input("Nova quantidade:\n>>> "))
-                    nova_observacao_pedido = input("Nova observacao:\n>>> ")
+                    menu_acompanhamento()
+                    opcao_acompanhamento = input("ESCOLHA UMA NOVA OPÇÃO DE ACOMPANHAMENTO:\n>>> ") 
+                    novo_acompanhamento = acompanhamento_nome.get(opcao_acompanhamento, "OPCAO INVALIDA!")
+                    nova_quantidade_acompanhamento = int(input("NOVA QUANTIDADE:\n>>> "))
+                    nova_observacao_pedido = input("NOVA OBSERVACAO:\n>>> ")
                     editar_pedido(numero_pedido, novo_hamburguer, nova_quantidade_hamburguer, nova_bebida, nova_quantidade_bebida, novo_acompanhamento, nova_quantidade_acompanhamento, nova_observacao_pedido)
                 
                 elif opcao_pedidos == '7':
@@ -247,4 +253,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
