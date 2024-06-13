@@ -233,6 +233,19 @@ def listar_pedidos():
     else:
         print("NENHUM PEDIDO CADASTRADO!.")
 
+def buscar_pedido (numero_pedido):
+    with open(arquivo3, 'r') as file_:
+        pedidos = json.load(file_)
+    
+    encontrado = False
+
+    for pedido in pedidos:
+        if pedido['Numero do pedido'] == numero_pedido:
+            print(f"NOME: {pedido['Nome']}, NUMERO DO PEDIDO: {pedido['Numero do pedido']}, HAMBURGUER: {pedido['Hamburguer']}, QUANTIDADE HAMBURGUER: {pedido['Quantidade hamburguer']}, BEBIDA: {pedido['Bebida']}, QUANTIDADE BEBIDA: {pedido['Quantidade bebida']}, ACOMPANHAMENTO: {pedido['Acompanhamento']}, QUANTIDADE ACOMPANHAMENTO: {pedido['Quantidade acompanhamento']}, OBSERVACAO: {pedido['Observacao do pedido']}")
+            encontrado = True
+    if not encontrado:
+            print("NENHUM PEDIDO ENCONTRADO")
+
 def confirmar_pedido():
     confirmacao = input("Deseja confirmar o pedido? (S/N): ").upper()
     return confirmacao == 'S'
@@ -274,8 +287,9 @@ def menu_pedidos():
     print("4. FINALIZAR PEDIDO")
     print("5. LISTAR PEDIDOS")
     print("6. EDITAR PEDIDO")
-    print("7. EXCLUIR PEDIDO")  
-    print("8. VOLTAR AO MENU ANTERIOR")
+    print("7. EXCLUIR PEDIDO")
+    print("8. BUSCAR PEDIDO") 
+    print("9. VOLTAR AO MENU ANTERIOR")
 
 
 def menu_hamburguer():
@@ -503,7 +517,12 @@ def main():
                             excluir_pedido(numero_pedido)
 
                         elif opcao_pedidos == '8':
+                            numero_pedido = int(input("DIGITE O NUMERO DO PEDIDO:\n>>> "))
+                            buscar_pedido(numero_pedido)
+
+                        elif opcao_pedidos == '9':
                             print("VOLTAR AO MENU ANTERIOR...")
+                            sleep(3)
                             break
 
                         else:
@@ -519,4 +538,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
