@@ -58,6 +58,7 @@ def excluir_pedido(numero_pedido):
     with open(arquivo3, 'w') as file_:
         json.dump(pedidos, file_, indent=4)
     print("PEDIDO EXCLUÍDO COM SUCESSO!")
+    print("Arroz doce")
 
 def listar_pedidos():
     with open(arquivo3, 'r') as file_:
